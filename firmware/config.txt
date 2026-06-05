@@ -1,5 +1,0 @@
-# VibeOS Pi Configuration
-arm_64bit=1
-kernel=kernel8.img
-disable_overscan=1
-gpu_mem=64
