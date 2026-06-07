@@ -40,7 +40,22 @@ int hal_dma_copy_2d(void *dst, uint32_t dst_pitch,
 }
 
 int hal_dma_fb_copy(uint32_t *dst, const uint32_t *src, uint32_t width, uint32_t height) {
-    memcpy(dst, src, width * height * sizeof(uint32_t));
+    size_t pixels, bytes;
+
+    if (!dst || !src)
+        return -1;
+
+    if (height != 0 && width > SIZE_MAX / height)
+        return -1;
+    
+    pixels = (size_t)height * width;
+
+    if (pixels > SIZE_MAX / sizeof(uint32_t))
+        return -1;
+
+    bytes = pixels * sizeof(uint32_t);
+
+    memcpy(dst, src, bytes);
     return 0;
 }
 
